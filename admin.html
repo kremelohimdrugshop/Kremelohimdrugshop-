@@ -38,6 +38,7 @@ footer{background:#0b3d91;color:white;padding:20px;text-align:center;margin-top:
 #backToTop{position:fixed;bottom:90px;right:20px;background:#0b3d91;color:white;padding:10px 14px;border-radius:50%;cursor:pointer;display:none;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
 @media(max-width:768px){#menuToggle{display:block;}nav{display:none;flex-direction:column;width:100%;background:#0b3d91;border-radius:10px;padding:15px;}nav.active{display:flex;}nav a{margin:10px 0;font-size:16px;}}
+
 /* ===== ADMIN IMPROVEMENTS ===== */
 .admin-cards{
   display:grid;
@@ -77,297 +78,277 @@ footer{background:#0b3d91;color:white;padding:20px;text-align:center;margin-top:
 <body>
 
 <header>
-<div class="logo-area">
-<h1>KREM ELOHIM DRUG SHOP</h1>
-</div>
-<span id="menuToggle">☰</span>
-<nav>
-<a href="#home">Home</a>
-<a href="#products">Products</a>
-<a href="#admin">Admin</a>
-<a href="#contact">Contact</a>
-</nav>
+  <div class="logo-area">
+    <h1>KREM ELOHIM DRUG SHOP</h1>
+  </div>
+  <span id="menuToggle">☰</span>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#products">Products</a>
+    <a href="#admin">Admin</a>
+    <a href="#contact">Contact</a>
+  </nav>
 </header>
+
+<!-- LOGIN FORM -->
 <div id="adminLoginBox">
   <h3>Admin Login</h3>
-  <input type="email" id="adminEmail" placeholder="Enter email" 
-         style="padding:10px;width:100%;max-width:300px;margin:10px auto;border-radius:8px;border:1px solid #ccc;display:block;">
-  <input type="password" id="adminPassword" placeholder="Enter password" 
-         style="padding:10px;width:100%;max-width:300px;margin:10px auto;border-radius:8px;border:1px solid #ccc;display:block;">
+  <input type="email" id="adminEmail" placeholder="Enter email" style="padding:10px;width:100%;max-width:300px;margin:10px auto;border-radius:8px;border:1px solid #ccc;display:block;">
+  <input type="password" id="adminPassword" placeholder="Enter password" style="padding:10px;width:100%;max-width:300px;margin:10px auto;border-radius:8px;border:1px solid #ccc;display:block;">
   <button class="btn" id="adminLoginBtn">Login</button>
 </div>
 
-<button class="btn" id="adminLogoutBtn" style="display:none;margin-bottom:20px;">
-  Logout
-</button>
+<button class="btn" id="adminLogoutBtn" style="display:none;margin-bottom:20px;">Logout</button>
+
 <div class="cart-counter">Cart: <span id="cart-count">0</span></div>
+
 <div id="adminContent" style="display:none;">
 
-<!-- HERO -->
-<section class="hero" id="home">
-<div class="hero-content">
-<h2>Welcome to KREM ELOHIM DRUG SHOP</h2>
-<p>By His stripes we are healed</p>
-<a href="#products" class="btn">View Products</a>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h2>Welcome to KREM ELOHIM DRUG SHOP</h2>
+      <p>By His stripes we are healed</p>
+      <a href="#products" class="btn">View Products</a>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section id="products">
+    <h2>Our Products</h2>
+    <input type="text" id="productSearch" placeholder="Search products..." style="padding:10px;width:100%;max-width:400px;margin:20px auto;border-radius:8px;border:1px solid #ccc;display:block;">
+    <div class="products" id="productsContainer"></div>
+    <button class="btn" id="checkoutBtn">Checkout via WhatsApp</button>
+  </section>
+
+  <!-- ADMIN DASHBOARD -->
+  <section id="admin">
+    <h2>Admin Dashboard</h2>
+    <p>View all orders received from customers</p>
+
+    <div class="admin-cards">
+      <div class="admin-card">
+        <h3>Total Orders</h3>
+        <p id="totalOrders">0</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Pending Orders</h3>
+        <p id="pendingOrders">0</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Completed Orders</h3>
+        <p id="completedOrders">0</p>
+      </div>
+
+      <div class="admin-card">
+        <h3>Total Revenue (UGX)</h3>
+        <p id="totalRevenue">0</p>
+      </div>
+    </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Customer</th>
+          <th>Items</th>
+          <th>Total (UGX)</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody id="ordersTableBody"></tbody>
+    </table>
+  </section>
 </div>
-</section>
-
-<!-- PRODUCTS -->
-<section id="products">
-<h2>Our Products</h2>
-<input type="text" id="productSearch" placeholder="Search products..." style="padding:10px;width:100%;max-width:400px;margin:20px auto;border-radius:8px;border:1px solid #ccc;display:block;">
-<div class="products" id="productsContainer"></div>
-<button class="btn" id="checkoutBtn">Checkout via WhatsApp</button>
-</section>
-
-<!-- ADMIN DASHBOARD -->
-<section id="admin">
-<h2>Admin Dashboard</h2>
-<p>View all orders received from customers</p>
-<div class="admin-cards">
-  <div class="admin-card">
-    <h3>Total Orders</h3>
-    <p id="totalOrders">0</p>
-  </div>
-
-  <div class="admin-card">
-    <h3>Pending Orders</h3>
-    <p id="pendingOrders">0</p>
-  </div>
-
-  <div class="admin-card">
-    <h3>Completed Orders</h3>
-    <p id="completedOrders">0</p>
-  </div>
-
-  <div class="admin-card">
-    <h3>Total Revenue (UGX)</h3>
-    <p id="totalRevenue">0</p>
-  </div>
-</div>
-<table>
-<thead>
-<tr>
-<th>Order #</th>
-<th>Customer</th>
-<th>Items</th>
-<th>Total (UGX)</th>
-<th>Status</th>
-<th>Action</th>
-</tr>
-</thead>
-<tbody id="ordersTableBody"></tbody>
-</table>
-</section>
 
 <!-- CONTACT -->
 <section id="contact">
-<h2>Contact Us</h2>
-<p>📞 +256 787776536 | +256 773353091 📧 info@kremelohimdrugshop.com</p>
-<a class="btn" href="https://wa.me/256773353091" target="_blank">Chat on WhatsApp</a>
+  <h2>Contact Us</h2>
+  <p>📞 +256 787776536 | +256 773353091 📧 info@kremelohimdrugshop.com</p>
+  <a class="btn" href="https://wa.me/256773353091" target="_blank">Chat on WhatsApp</a>
 </section>
 
 <footer>
-<p>© 2026 KREM ELOHIM DRUG SHOP | Designed by Khaukha Emmanuel</p>
+  <p>© 2026 KREM ELOHIM DRUG SHOP | Designed by Khaukha Emmanuel</p>
 </footer>
 
 <div id="backToTop">↑</div>
 
-<!-- Firebase -->
+<!-- FIREBASE SCRIPTS -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 
+<!-- MAIN SCRIPT -->
 <script>
-// Firebase initialization
-const firebaseConfig = {
-  apiKey: "AIzaSyAqjixDbyL4yTRgls2GeOP7d1exSaeGKXA",
-  authDomain: "krem-elohim-drug-shop-f3132.firebaseapp.com",
-  projectId: "krem-elohim-drug-shop-f3132",
-  storageBucket: "krem-elohim-drug-shop-f3132.firebasestorage.app",
-  messagingSenderId: "93466519820",
-  appId: "1:93466519820:web:e44847fae281036e05c129"
-};
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+document.addEventListener("DOMContentLoaded", function(){
 
-// CART
-let cart = [];
-const cartCountSpan = document.getElementById("cart-count");
-const checkoutBtn = document.getElementById("checkoutBtn");
+  // Initialize Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqjixDbyL4yTRgls2GeOP7d1exSaeGKXA",
+    authDomain: "krem-elohim-drug-shop-f3132.firebaseapp.com",
+    projectId: "krem-elohim-drug-shop-f3132",
+    storageBucket: "krem-elohim-drug-shop-f3132.firebasestorage.app",
+    messagingSenderId: "93466519820",
+    appId: "1:93466519820:web:e44847fae281036e05c129"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  const auth = firebase.auth();
 
-// RENDER PRODUCTS
-function renderProducts(products){
-  const container = document.getElementById("productsContainer");
-  container.innerHTML="";
-  products.forEach(doc=>{
-    const data = doc.data();
-    const card = document.createElement("div");
-    card.classList.add("product-card");
-    card.innerHTML = `
-      <img src="${data.image}" alt="${data.name}">
-      <h3>${data.name}</h3>
-      <p>UGX ${data.price}</p>
-      <button class="btn">Add to Cart</button>
-      <p><strong>Status:</strong> ${data.stock>0?"In Stock":"Out of Stock"}</p>
-    `;
-    card.querySelector("button").addEventListener("click", ()=>{
-      if(data.stock>0){
-        cart.push(data);
-        cartCountSpan.innerText = cart.length;
-        alert(`${data.name} added to cart!`);
-      } else {
-        alert(`${data.name} is out of stock!`);
-      }
+  // CART
+  let cart = [];
+  const cartCountSpan = document.getElementById("cart-count");
+  const checkoutBtn = document.getElementById("checkoutBtn");
+
+  // RENDER PRODUCTS
+  function renderProducts(products){
+    const container = document.getElementById("productsContainer");
+    container.innerHTML="";
+    products.forEach(doc=>{
+      const data = doc.data();
+      const card = document.createElement("div");
+      card.classList.add("product-card");
+      card.innerHTML = `
+        <img src="${data.image}" alt="${data.name}">
+        <h3>${data.name}</h3>
+        <p>UGX ${data.price}</p>
+        <button class="btn">Add to Cart</button>
+        <p><strong>Status:</strong> ${data.stock>0?"In Stock":"Out of Stock"}</p>
+      `;
+      card.querySelector("button").addEventListener("click", ()=>{
+        if(data.stock>0){
+          cart.push(data);
+          cartCountSpan.innerText = cart.length;
+          alert(`${data.name} added to cart!`);
+        } else {
+          alert(`${data.name} is out of stock!`);
+        }
+      });
+      container.appendChild(card);
     });
-    container.appendChild(card);
-  });
-}
-
-// FETCH PRODUCTS
-db.collection("products").onSnapshot(snapshot=>{
-  renderProducts(snapshot.docs);
-});
-
-// SEARCH
-document.getElementById("productSearch").addEventListener("keyup", function(){
-  const filter = this.value.toLowerCase();
-  const cards = document.querySelectorAll(".product-card");
-  cards.forEach(card=>{
-    const text = card.innerText.toLowerCase();
-    card.style.display = text.includes(filter) ? "block" : "none";
-  });
-});
-
-// CHECKOUT
-checkoutBtn.addEventListener("click", ()=>{
-  if(cart.length==0){ alert("Cart empty!"); return; }
-  let msg="I want to order the following products:\n"; 
-  let total=0;
-  cart.forEach((item,i)=>{
-    msg+=`${i+1}. ${item.name} - UGX ${item.price}\n`;
-    total+=parseFloat(item.price);
-  });
-  msg+=`Total: UGX ${total}`;
-  // save order
-  db.collection("orders").add({items:cart,total,name:"Customer",status:"Pending",timestamp:Date.now()});
-  window.open(`https://wa.me/256773353091?text=${encodeURIComponent(msg)}`,'_blank');
-  cart=[]; cartCountSpan.innerText=0;
-});
-
-// ADMIN: fetch orders
-const ordersBody = document.getElementById("ordersTableBody");
-db.collection("orders").orderBy("timestamp","desc").onSnapshot(snapshot=>{
-  ordersBody.innerHTML="";
-
-  let totalOrders = 0;
-  let pending = 0;
-  let completed = 0;
-  let revenue = 0;
-
-  snapshot.docs.forEach((doc,index)=>{
-    const data = doc.data();
-    totalOrders++;
-    revenue += parseFloat(data.total);
-
-    if(data.status==="Pending") pending++;
-    if(data.status==="Completed") completed++;
-
-    const row = document.createElement("tr");
-
-    const statusClass = data.status==="Pending" 
-      ? "status-pending" 
-      : "status-completed";
-
-    row.innerHTML = `
-      <td>${index+1}</td>
-      <td>${data.name}</td>
-      <td>${data.items.map(i=>i.name).join(", ")}</td>
-      <td>${data.total}</td>
-      <td class="${statusClass}">${data.status}</td>
-      <td><button class="btn admin-status-btn">
-        ${data.status==="Pending"?"Mark Completed":"Mark Pending"}
-      </button></td>
-    `;
-
-    row.querySelector(".admin-status-btn").addEventListener("click", ()=>{
-      const newStatus = data.status==="Pending"?"Completed":"Pending";
-      db.collection("orders").doc(doc.id).update({status:newStatus});
-    });
-
-    ordersBody.appendChild(row);
-  });
-
-  document.getElementById("totalOrders").innerText = totalOrders;
-  document.getElementById("pendingOrders").innerText = pending;
-  document.getElementById("completedOrders").innerText = completed;
-  document.getElementById("totalRevenue").innerText = revenue;
-});
-
-    row.innerHTML = `
-      <td>${index+1}</td>
-      <td>${data.name}</td>
-      <td>${data.items.map(i=>i.name).join(", ")}</td>
-      <td>${data.total}</td>
-      <td>${data.status}</td>
-      <td><button class="btn admin-status-btn">${data.status==="Pending"?"Mark Completed":"Pending"}</button></td>
-    `;
-    row.querySelector(".admin-status-btn").addEventListener("click", ()=>{
-      const newStatus = data.status==="Pending"?"Completed":"Pending";
-      db.collection("orders").doc(doc.id).update({status:newStatus});
-    });
-    ordersBody.appendChild(row);
-  });
-});
-
-// MOBILE MENU
-const menuToggle = document.getElementById("menuToggle");
-const nav = document.querySelector("nav");
-menuToggle.addEventListener("click", ()=>{ nav.classList.toggle("active"); });
-nav.querySelectorAll("a").forEach(link=>link.addEventListener("click", ()=>nav.classList.remove("active")));
-
-// BACK TO TOP
-const backBtn=document.getElementById("backToTop");
-window.onscroll=function(){backBtn.style.display=(document.documentElement.scrollTop>300)?"block":"none";};
-backBtn.onclick=function(){window.scrollTo({top:0,behavior:"smooth"});};
-
-// SMS placeholder
-function sendSMSNotification(number,message){console.log(`SMS to ${number}: ${message}`);}
-// AUTH
-const auth = firebase.auth();
-const loginBtn = document.getElementById("adminLoginBtn");
-const logoutBtn = document.getElementById("adminLogoutBtn");
-const loginBox = document.getElementById("adminLoginBox");
-const adminContent = document.getElementById("adminContent");
-
-loginBtn.addEventListener("click", ()=>{
-  const email = document.getElementById("adminEmail").value;
-  const password = document.getElementById("adminPassword").value;
-
-  auth.signInWithEmailAndPassword(email,password)
-    .then(()=>{
-      alert("Login successful");
-    })
-    .catch(error=>{
-      alert(error.message);
-    });
-});
-
-logoutBtn.addEventListener("click", ()=>{
-  auth.signOut();
-});
-
-auth.onAuthStateChanged(user=>{
-  if(user){
-    loginBox.style.display="none";
-    adminContent.style.display="block";
-    logoutBtn.style.display="inline-block";
-  } else {
-    loginBox.style.display="block";
-    adminContent.style.display="none";
-    logoutBtn.style.display="none";
   }
+
+  // FETCH PRODUCTS
+  db.collection("products").onSnapshot(snapshot=>{
+    renderProducts(snapshot.docs);
+  });
+
+  // SEARCH
+  document.getElementById("productSearch").addEventListener("keyup", function(){
+    const filter = this.value.toLowerCase();
+    const cards = document.querySelectorAll(".product-card");
+    cards.forEach(card=>{
+      const text = card.innerText.toLowerCase();
+      card.style.display = text.includes(filter) ? "block" : "none";
+    });
+  });
+
+  // CHECKOUT
+  checkoutBtn.addEventListener("click", ()=>{
+    if(cart.length==0){ alert("Cart empty!"); return; }
+    let msg="I want to order the following products:\n"; 
+    let total=0;
+    cart.forEach((item,i)=>{
+      msg+=`${i+1}. ${item.name} - UGX ${item.price}\n`;
+      total+=parseFloat(item.price);
+    });
+    msg+=`Total: UGX ${total}`;
+    db.collection("orders").add({items:cart,total,name:"Customer",status:"Pending",timestamp:Date.now()});
+    window.open(`https://wa.me/256773353091?text=${encodeURIComponent(msg)}`,'_blank');
+    cart=[]; cartCountSpan.innerText=0;
+  });
+
+  // ADMIN: fetch orders
+  const ordersBody = document.getElementById("ordersTableBody");
+  db.collection("orders").orderBy("timestamp","desc").onSnapshot(snapshot=>{
+    ordersBody.innerHTML="";
+
+    let totalOrders = 0;
+    let pending = 0;
+    let completed = 0;
+    let revenue = 0;
+
+    snapshot.docs.forEach((doc,index)=>{
+      const data = doc.data();
+      totalOrders++;
+      revenue += parseFloat(data.total);
+      if(data.status==="Pending") pending++;
+      if(data.status==="Completed") completed++;
+
+      const row = document.createElement("tr");
+      const statusClass = data.status==="Pending" ? "status-pending" : "status-completed";
+
+      row.innerHTML = `
+        <td>${index+1}</td>
+        <td>${data.name}</td>
+        <td>${data.items.map(i=>i.name).join(", ")}</td>
+        <td>${data.total}</td>
+        <td class="${statusClass}">${data.status}</td>
+        <td><button class="btn admin-status-btn">${data.status==="Pending"?"Mark Completed":"Mark Pending"}</button></td>
+      `;
+
+      row.querySelector(".admin-status-btn").addEventListener("click", ()=>{
+        const newStatus = data.status==="Pending"?"Completed":"Pending";
+        db.collection("orders").doc(doc.id).update({status:newStatus});
+      });
+
+      ordersBody.appendChild(row);
+    });
+
+    document.getElementById("totalOrders").innerText = totalOrders;
+    document.getElementById("pendingOrders").innerText = pending;
+    document.getElementById("completedOrders").innerText = completed;
+    document.getElementById("totalRevenue").innerText = revenue;
+  });
+
+  // AUTH LOGIN
+  const loginBtn = document.getElementById("adminLoginBtn");
+  const logoutBtn = document.getElementById("adminLogoutBtn");
+  const loginBox = document.getElementById("adminLoginBox");
+  const adminContent = document.getElementById("adminContent");
+
+  loginBtn.addEventListener("click", ()=>{
+    const email = document.getElementById("adminEmail").value;
+    const password = document.getElementById("adminPassword").value;
+
+    if(!email || !password){ alert("Enter email and password"); return; }
+
+    auth.signInWithEmailAndPassword(email,password)
+      .then(()=>{ alert("Login successful"); })
+      .catch(error=>{ alert(error.message); });
+  });
+
+  logoutBtn.addEventListener("click", ()=>{ auth.signOut(); });
+
+  auth.onAuthStateChanged(user=>{
+    if(user){
+      loginBox.style.display="none";
+      adminContent.style.display="block";
+      logoutBtn.style.display="inline-block";
+    } else {
+      loginBox.style.display="block";
+      adminContent.style.display="none";
+      logoutBtn.style.display="none";
+    }
+  });
+
+  // MOBILE MENU
+  const menuToggle = document.getElementById("menuToggle");
+  const nav = document.querySelector("nav");
+  menuToggle.addEventListener("click", ()=>{ nav.classList.toggle("active"); });
+  nav.querySelectorAll("a").forEach(link=>link.addEventListener("click", ()=>nav.classList.remove("active")));
+
+  // BACK TO TOP
+  const backBtn=document.getElementById("backToTop");
+  window.onscroll=function(){backBtn.style.display=(document.documentElement.scrollTop>300)?"block":"none";};
+  backBtn.onclick=function(){window.scrollTo({top:0,behavior:"smooth"});};
+
 });
 </script>
+
 </body>
 </html>
