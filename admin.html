@@ -120,7 +120,58 @@ footer{background:#0b3d91;color:white;padding:20px;text-align:center;margin-top:
     <div class="products" id="productsContainer"></div>
     <button class="btn" id="checkoutBtn">Checkout via WhatsApp</button>
   </section>
+<h2>Add Product</h2>
 
+<input type="text" id="pname" placeholder="Product Name"><br><br>
+<input type="number" id="pprice" placeholder="Price"><br><br>
+<button onclick="addProduct()">Add Product</button>
+
+<hr>
+
+<h2>All Products</h2>
+<div id="product-list"></div>
+
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [];
+
+function addProduct() {
+    let name = document.getElementById("pname").value;
+    let price = document.getElementById("pprice").value;
+
+    if (!name || !price) {
+        alert("Fill all fields");
+        return;
+    }
+
+    products.push({name, price});
+    localStorage.setItem("products", JSON.stringify(products));
+
+    alert("Product Added!");
+    displayProducts();
+}
+
+function displayProducts() {
+    let list = document.getElementById("product-list");
+    list.innerHTML = "";
+
+    products.forEach((product, index) => {
+        list.innerHTML += `
+            <p>
+                ${product.name} - UGX ${product.price}
+                <button onclick="deleteProduct(${index})">Delete</button>
+            </p>
+        `;
+    });
+}
+
+function deleteProduct(index) {
+    products.splice(index, 1);
+    localStorage.setItem("products", JSON.stringify(products));
+    displayProducts();
+}
+
+displayProducts();
+</script>
   <!-- ADMIN DASHBOARD -->
   <section id="admin">
     <h2>Admin Dashboard</h2>

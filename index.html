@@ -520,6 +520,7 @@ a, button {
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <link rel="icon" href="https://kremelohimdrugshop.github.io/Kremelohimdrugshop-/images/favicon.png" type="image/png">
+Cart: <span id="cart-count">0</span>
 </header>
 
 <!-- HOME -->
@@ -634,7 +635,11 @@ Access your Drug shop management panel to manage products, orders, and stock.
 
 <!-- PRODUCTS -->
 <section id="products">
-<h2>Our Products</h2>
+<button onclick="addToCart('Paracetamol', 5000)">
+Add to Cart
+</button>
+<h2>Products</h2>
+<div id="shop-products"></div>
 <input type="text" id="productSearch" placeholder="Search products..." style="padding:10px;width:100%;max-width:400px;margin:20px auto;border-radius:8px;border:1px solid #ccc;">
 <div id="cart-container" style="max-width:400px;margin:15px auto;text-align:center;">
 <p>Cart: <span id="cart-count">0</span> items</p>
@@ -949,17 +954,22 @@ function updateCartCount() {
 
 updateCartCount();
 </script>
+<script>
+let products = JSON.parse(localStorage.getItem("products")) || [];
+let shopDiv = document.getElementById("shop-products");
+
+products.forEach(product => {
+    shopDiv.innerHTML += `
+        <div>
+            <h3>${product.name}</h3>
+            <p>UGX ${product.price}</p>
+            <button onclick="addToCart('${product.name}', ${product.price})">
+                Add to Cart
+            </button>
+        </div>
+        <hr>
+    `;
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
