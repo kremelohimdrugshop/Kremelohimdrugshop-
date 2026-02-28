@@ -627,7 +627,7 @@ To become the most trusted and reliable drug shop in Mbale City and surrounding 
 <section id="admin">
 <h2>Admin Dashboard</h2>
 <p>
-Access your pharmacy management panel to manage products, orders, and stock.
+Access your Drug shop management panel to manage products, orders, and stock.
 </p>
 <p><a href="admin.html" class="btn" target="_blank">Go to Admin Panel</a></p>
 </section>
@@ -754,7 +754,7 @@ loading="lazy">
 </iframe>
 </div>
 <p>
-<p>Call: <a href="tel:+256773353091">+256773353091</a></p>
+<p>Call: <a href="tel:+256773353091 | +256787776536">+256773353091 | +256787776536</a></p>
 <p>WhatsApp: <a href="https://wa.me/256773353091">Chat Now</a></p>
 </p>
 </div>
@@ -916,5 +916,50 @@ faders.forEach(fader => {
   appearOnScroll.observe(fader);
 });
 </script>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(name, price) {
+
+    let product = {
+        name: name,
+        price: price,
+        quantity: 1
+    };
+
+    let existing = cart.find(item => item.name === name);
+
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        cart.push(product);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+    alert("Item added to cart!");
+}
+
+function updateCartCount() {
+    let total = 0;
+    cart.forEach(item => total += item.quantity);
+    document.getElementById("cart-count").innerText = total;
+}
+
+updateCartCount();
+</script>
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
