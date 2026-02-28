@@ -632,7 +632,25 @@ Access your Drug shop management panel to manage products, orders, and stock.
 </p>
 <p><a href="admin.html" class="btn" target="_blank">Go to Admin Panel</a></p>
 </section>
+<h3>Customer Login</h3>
+<input type="email" id="cust-email" placeholder="Email"><br>
+<input type="password" id="cust-pass" placeholder="Password"><br>
+<button onclick="customerLogin()">Login</button>
 
+<script>
+function customerLogin(){
+  const email = document.getElementById("cust-email").value;
+  const pass = document.getElementById("cust-pass").value;
+
+  auth.signInWithEmailAndPassword(email, pass)
+    .then(cred=>{
+      alert("Logged in as " + email);
+    })
+    .catch(err=>{
+      alert(err.message);
+    });
+}
+</script>
 <!-- PRODUCTS -->
 <section id="products">
 <button onclick="addToCart('Paracetamol', 5000)">
@@ -971,22 +989,33 @@ products.forEach(product => {
     `;
 });
 </script>
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+<!-- Firebase App -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"></script>
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAqjixDbyL4yTRgls2GeOP7d1exSaeGKXA",
-  authDomain: "krem-elohim-drug-shop-f3132.firebaseapp.com",
-  projectId: "krem-elohim-drug-shop-f3132",
-  storageBucket: "krem-elohim-drug-shop-f3132.firebasestorage.app",
-  messagingSenderId: "93466519820",
-  appId: "1:93466519820:web:e44847fae281036e05c129"
-};
+<!-- Firebase Products -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"></script>
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqjixDbyL4yTRgls2GeOP7d1exSaeGKXA",
+    authDomain: "krem-elohim-drug-shop-f3132.firebaseapp.com",
+    projectId: "krem-elohim-drug-shop-f3132",
+    storageBucket: "krem-elohim-drug-shop-f3132.firebasestorage.app",
+    messagingSenderId: "93466519820",
+    appId: "1:93466519820:web:e44847fae281036e05c129"
+  };
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
+  window.auth = auth;
+  window.db = db;
+</script>
+<script>
+function addToCart(productName, productPrice){ ... }
+function updateCartCount(){ ... }
+</script>
 </body>
 </html>
